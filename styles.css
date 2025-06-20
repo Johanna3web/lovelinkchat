@@ -1,0 +1,191 @@
+/* General styles */
+body {
+    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    margin: 0;
+  }
+  
+  .settings-box {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: 30px 40px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  h2 {
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-align: center;
+  }
+  
+  /* Setting items */
+  .setting-item {
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .setting-item label {
+    font-weight: 600;
+    font-size: 1.1em;
+  }
+  
+  /* Toggle Switch */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    border-radius: 26px;
+    transition: 0.4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #ff5b99;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(24px);
+  }
+  
+  /* Buttons */
+  button {
+    background-color: #ff5b99;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-weight: 700;
+    color: white;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px 0;
+    width: 100%;
+  }
+  
+  button:hover {
+    background-color: #ff2d6a;
+  }
+  
+  /* Danger buttons (deactivate/delete) */
+  .danger-btn {
+    background-color: #ff3b5c;
+  }
+  
+  .danger-btn:hover {
+    background-color: #c92a43;
+  }
+  
+  /* Change password section */
+  .change-password-container {
+    flex-direction: column;
+    align-items: flex-start;
+    display: flex;
+  }
+  
+  .change-password {
+    margin-top: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .change-password input {
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1em;
+    width: 100%;
+  }
+  
+  #passwordMsg {
+    margin-top: 10px;
+    color: #ffbbbb;
+    font-weight: 600;
+  }
+  
+  /* Back link */
+  .back-link {
+    color: #ffbfd3;
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Modal styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal .modal-content {
+    background: white;
+    color: black;
+    padding: 25px 30px;
+    border-radius: 15px;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .modal .modal-content button {
+    width: auto;
+    margin: 15px 10px 0 10px;
+    padding: 10px 25px;
+    border-radius: 20px;
+    color: white;
+  }
+  
+  .btn-cancel {
+    background: #ccc;
+    color: #333;
+  }
+  
+  .btn-confirm {
+    background: #ff5b99;
+  }
+  

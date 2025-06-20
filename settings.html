@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Settings - LoveLink</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="settings-box">
+    <h2>Settings</h2>
+
+    <div class="setting-item">
+      <label for="notifToggle">Enable Notifications</label>
+      <label class="switch">
+        <input type="checkbox" id="notifToggle" />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="setting-item">
+      <label for="privacyToggle">Private Profile</label>
+      <label class="switch">
+        <input type="checkbox" id="privacyToggle" />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="setting-item change-password-container">
+      <button id="changePasswordBtn">Change Password</button>
+      <div class="change-password" id="changePasswordSection">
+        <input type="password" id="oldPassword" placeholder="Old Password" />
+        <input type="password" id="newPassword" placeholder="New Password" />
+        <input type="password" id="confirmPassword" placeholder="Confirm New Password" />
+        <button id="savePasswordBtn">Save Password</button>
+        <p id="passwordMsg"></p>
+      </div>
+    </div>
+
+    <button id="deactivateAccountBtn" class="danger-btn">Deactivate Account</button>
+    <button id="deleteAccountBtn" class="danger-btn">Delete Account</button>
+
+    <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+  </main>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="modal">
+    <div class="modal-content">
+      <p id="modalText"></p>
+      <button class="btn-cancel">Cancel</button>
+      <button class="btn-confirm">Confirm</button>
+    </div>
+  </div>
+
+  <script src="settings.js"></script>
+</body>
+</html>

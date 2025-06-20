@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Profile</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: linear-gradient(to right, #ff758c, #ff7eb3);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    main.profile-box {
+      background: rgba(255,255,255,0.15);
+      border-radius: 15px;
+      padding: 30px 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    h2 {
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1em;
+      resize: vertical;
+    }
+    textarea {
+      min-height: 80px;
+    }
+    input[type="file"] {
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 20px;
+      background-color: #ff5b99;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 700;
+      color: white;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #ff2d6a;
+    }
+    .image-preview {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .image-preview img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid #fff;
+    }
+    ul.interests-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    ul.interests-list li {
+      background: #ff5b99;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    ul.interests-list li:hover {
+      background: #ff2d6a;
+    }
+    .interest-input-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .interest-input-group input {
+      flex-grow: 1;
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1em;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      color: #ffbfd3;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main class="profile-box">
+    <h2>Your Profile</h2>
+    
+    <label for="profile-pic">Profile Picture</label>
+    <input type="file" id="profile-pic" accept="image/*" />
+    <div id="profile-pic-preview" class="image-preview"></div>
+    
+    <label for="other-pics">Other Pictures</label>
+    <input type="file" id="other-pics" accept="image/*" multiple />
+    <div id="other-pics-preview" class="image-preview"></div>
+    
+    <label for="description">Description</label>
+    <textarea id="description" placeholder="Tell us about yourself..."></textarea>
+    
+    <label>Interests</label>
+    <ul id="interests-list" class="interests-list"></ul>
+    <div class="interest-input-group">
+      <input type="text" id="interest-input" placeholder="Add an interest" />
+      <button id="add-interest-btn" type="button">Add</button>
+    </div>
+    
+    <button id="save-btn">Save Profile</button>
+    <a href="dashboard.html">← Back to Dashboard</a>
+  </main>
+
+  <script>
+    const profilePicInput = document.getElementById('profile-pic');
+    const profilePicPreview = document.getElementById('profile-pic-preview');
+    const otherPicsInput = document.getElementById('other-pics');
+    const otherPicsPreview = document.getElementById('other-pics-preview');
+    const descriptionInput = document.getElementById('description');
+    const interestsList = document.getElementById('interests-list');
+    const interestInput = document.getElementById('interest-input');
+    const addInterestBtn = document.getElementById('add-interest-btn');
+    const saveBtn = document.getElementById('save-btn');
+
+    let profilePicData = '';
+    let otherPicsData = [];
+    let interests = [];
+
+    // Load saved data from localStorage
+    window.onload = () => {
+      const savedProfilePic = localStorage.getItem('profilePic');
+      if(savedProfilePic) {
+        profilePicData = savedProfilePic;
+        showImage(profilePicPreview, profilePicData);
+      }
+      
+      const savedOtherPics = JSON.parse(localStorage.getItem('otherPics') || '[]');
+      if(savedOtherPics.length > 0) {
+        otherPicsData = savedOtherPics;
+        otherPicsData.forEach(src => showImage(otherPicsPreview, src));
+      }
+
+      const savedDescription = localStorage.getItem('description');
+      if(savedDescription) descriptionInput.value = savedDescription;
+
+      const savedInterests = JSON.parse(localStorage.getItem('interests') || '[]');
+      if(savedInterests.length > 0) {
+        interests = savedInterests;
+        renderInterests();
+      }
+    };
+
+    // Show image helper
+    function showImage(container, src) {
+      const img = document.createElement('img');
+      img.src = src;
+      container.innerHTML = '';
+      container.appendChild(img);
+    }
+
+    // Profile pic change handler
+    profilePicInput.addEventListener('change', () => {
+      const file = profilePicInput.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        profilePicData = e.target.result;
+        showImage(profilePicPreview, profilePicData);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Other pics change handler
+    otherPicsInput.addEventListener('change', () => {
+      const files = Array.from(otherPicsInput.files);
+      otherPicsData = [];
+      otherPicsPreview.innerHTML = '';
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          otherPicsData.push(e.target.result);
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          otherPicsPreview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    // Add interest button
+    addInterestBtn.addEventListener('click', () => {
+      const val = interestInput.value.trim();
+      if(val && !interests.includes(val)) {
+        interests.push(val);
+        renderInterests();
+        interestInput.value = '';
+      }
+    });
+
+    // Render interests list
+    function renderInterests() {
+      interestsList.innerHTML = '';
+      interests.forEach((interest, idx) => {
+        const li = document.createElement('li');
+        li.textContent = interest;
+        li.title = 'Click to remove';
+        li.addEventListener('click', () => {
+          interests.splice(idx, 1);
+          renderInterests();
+        });
+        interestsList.appendChild(li);
+      });
+    }
+
+    // Save profile data
+    saveBtn.addEventListener('click', () => {
+      localStorage.setItem('profilePic', profilePicData);
+      localStorage.setItem('otherPics', JSON.stringify(otherPicsData));
+      localStorage.setItem('description', descriptionInput.value.trim());
+      localStorage.setItem('interests', JSON.stringify(interests));
+      alert('Profile saved successfully!');
+    });
+  </script>
+</body>
+</html>

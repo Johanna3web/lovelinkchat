@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header><h1>Welcome Back!</h1></header>
+  <nav>
+    <a href="profile.html">Profile</a>
+    <a href="chat.html">Chat</a>
+    <a href="account.html">Account Settings</a>
+    <a href="index.html" onclick="logout()">Logout</a>
+  </nav>
+  <main>
+    <p>Hello, <span id="user-email"></span>! What would you like to do today?</p>
+  </main>
+  <script>
+    document.getElementById('user-email').textContent = localStorage.getItem('userEmail');
+    function logout() {
+      localStorage.removeItem('userEmail');
+    }
+  </script>
+</body>
+</html>

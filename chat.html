@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LoveLink Chat</title>
+  <link rel="stylesheet" href="chat.css" />
+</head>
+<body>
+  <div class="chat-container">
+    <aside class="user-list">
+      <h2>Matches</h2>
+      <ul id="users">
+        <!-- Dynamically filled with JS -->
+      </ul>
+    </aside>
+
+    <section class="chat-section">
+      <header class="chat-header">
+        <h2 id="chat-with">Select a user to chat</h2>
+      </header>
+
+      <div id="messages" class="messages"></div>
+      <!-- Voice Recorder -->
+<div class="voice-recorder">
+  <button id="start-record-btn">🎤 Start Recording</button>
+  <button id="stop-record-btn" disabled>⏹ Stop Recording</button>
+  <audio id="audio-playback" controls style="display:none;"></audio>
+</div>
+
+<!-- Video Call Section -->
+<div class="video-call-section">
+  <video id="local-video" autoplay muted playsinline></video>
+  <div class="call-buttons">
+    <button id="start-call-btn">📞 Start Call</button>
+    <button id="end-call-btn" disabled>❌ End Call</button>
+  </div>
+</div>
+
+      <form id="message-form" class="message-form">
+        <input
+          type="text"
+          id="message-input"
+          placeholder="Type your message..."
+          autocomplete="off"
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+    </section>
+  </div>
+
+  <script src="chat.js"></script>
+</body>
+</html>
